@@ -1,5 +1,6 @@
 import pygame
 from Classes.Crossword import Crossword
+from constants import *
 
 
 class Game:
@@ -19,7 +20,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-                if event.type == pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN and event.key in ARROWS:
                     self.move_around(event)
 
             self.crossword.draw_graph()
@@ -30,19 +31,19 @@ class Game:
 
     def move_around(self, event):
         selected = self.crossword.get_selected_cell()
-        if event.key == 273:
+        if event.key == UP:
             new_cell = self.crossword.find_cell(max(0, selected.row - 1),
                                            selected.col)
             self.crossword.set_selected_cell(new_cell)
-        elif event.key == 274:
+        elif event.key == DOWN:
             new_cell = self.crossword.find_cell(min(self.size - 1, selected.row + 1),
                                            selected.col)
             self.crossword.set_selected_cell(new_cell)
-        elif event.key == 275:
+        elif event.key == RIGHT:
             new_cell = self.crossword.find_cell(selected.row,
                                            min(self.size - 1, selected.col + 1))
             self.crossword.set_selected_cell(new_cell)
-        elif event.key == 276:
+        elif event.key == LEFT:
             new_cell = self.crossword.find_cell(selected.row,
                                            max(0, selected.col - 1))
             self.crossword.set_selected_cell(new_cell)
