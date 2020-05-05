@@ -15,6 +15,7 @@ class Game:
     def start_game(self):
         self.screen.fill((255, 255, 255))
         self.crossword.init_grid()
+        self.crossword.add_words()
         self.running = True
         while self.running:
             for event in pygame.event.get():

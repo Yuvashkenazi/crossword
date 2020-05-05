@@ -21,6 +21,9 @@ class Cell:
     def get_stroke_width(self):
         return self.stroke_width
 
+    def set_stroke_width(self, value):
+        self.stroke_width = value
+
     def set_selected(self, selected):
         self.selected = selected
         self._set_color()

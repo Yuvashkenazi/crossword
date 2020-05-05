@@ -8,11 +8,17 @@ class Crossword:
         self.grid_size = grid_size
         self.cells = []
         self.selected = None
+        self.words = [
+            Word(0,0,10,'h'),
+            Word(0,0,10,'v'),
+            Word(0,5,10,'v'),
+            Word(5,5,5,'h')
+        ]
 
     def init_grid(self):
         for i in range(self.grid_size):
             for j in range(self.grid_size):
-                cell = Cell(i, j, False)
+                cell = Cell(i, j, True)
 
                 if i == 8 and j == 8:
                     self.set_selected_cell(cell)
@@ -24,6 +30,19 @@ class Crossword:
             other_cell.set_selected(False)
         cell.set_selected(True)
         self.selected = cell
+
+    def add_words(self):
+        # word = start_row, start_col, length, dir
+        for word in self.words:
+            self._add_word(word)
+
+    def _add_word(self, word):
+        for i in range(word.length):
+            if word.direction == 'h':
+                cell = self.find_cell(word.row, word.col+i)
+            elif word.direction == 'v':
+                cell = self.find_cell(word.row+i, word.col)
+            cell.set_stroke_width(3)
 
     def draw_graph(self):
         for cell in self.cells:
@@ -44,3 +63,12 @@ class Crossword:
 
     def get_selected_cell(self):
         return self.selected
+
+
+class Word:
+    def __init__(self, start_row, start_col, length, direction, text=None):
+        self.row = start_row
+        self.col = start_col
+        self.length = length
+        self.direction = direction
+        self.text = text
