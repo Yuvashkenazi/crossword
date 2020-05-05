@@ -16,11 +16,14 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                if event.type == pygame.KEYUP:
+                    print(event.key)
 
             self.screen.fill((255, 255, 255))
 
             crossword = Crossword(self.screen, 16)
             crossword.init_grid()
+            crossword.draw_graph()
 
             pygame.display.flip()
 
