@@ -15,10 +15,15 @@ class Crossword:
                 cell = Cell(i, j, False)
 
                 if i == 8 and j == 8:
-                    cell.set_selected(True)
-                    self.selected = cell
+                    self.set_selected_cell(cell)
 
                 self.cells.append(cell)
+
+    def set_selected_cell(self, cell):
+        for other_cell in self.cells:
+            other_cell.set_selected(False)
+        cell.set_selected(True)
+        self.selected = cell
 
     def draw_graph(self):
         for cell in self.cells:
@@ -36,3 +41,6 @@ class Crossword:
             if cell.row == row and cell.col == col:
                 return cell
         return None
+
+    def get_selected_cell(self):
+        return self.selected
