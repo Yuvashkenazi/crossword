@@ -15,7 +15,7 @@ class Crossword:
             Word(0, 0, 10, 'v'),
             Word(0, 5, 10, 'v'),
             Word(5, 5, 5, 'h'),
-            Word(grid_size-8, grid_size-1, 8, 'v')
+            Word(grid_size - 8, grid_size - 1, 8, 'v')
         ]
 
     def init_grid(self):
@@ -36,7 +36,7 @@ class Crossword:
             self._add_word(word)
 
     def init_selected_cell(self):
-        center_cell = self.find_cell(self.grid_size//2, self.grid_size//2)
+        center_cell = self.find_cell(self.grid_size // 2, self.grid_size // 2)
         if not center_cell.get_filled():
             self.set_selected_cell(center_cell)
             return True
@@ -92,8 +92,8 @@ class Crossword:
         cell = self.find_cell(row, col)
         pygame.draw.rect(self.screen, Colors.white, cell.get_rect(), 0)
         coords = get_coordinates_from_grid(row, col)
-        surface = pygame.font.SysFont('arial', 25).render(text, True, (100, 0, 200))
-        self.screen.blit(surface, (coords[0] + 5, coords[1] - 2))
+        surface = pygame.font.Font('fonts/Arimo/Arimo-Regular.ttf', 22).render(text, True, Colors.purple)
+        self.screen.blit(surface, (coords[0] + 2, coords[1]))
 
     def find_cell(self, row, col):
         for cell in self.cells:

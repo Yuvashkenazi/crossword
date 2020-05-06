@@ -22,9 +22,9 @@ class Game:
 
         LETTERS = None
         if self.language == Languages.EN:
-            LETTERS = LETTERS_EN2
+            LETTERS = LETTERS_EN
         if self.language == Languages.HE:
-            LETTERS = LETTERS_HE2
+            LETTERS = LETTERS_HE
 
         while self.running:
             for event in pygame.event.get():
