@@ -1,4 +1,5 @@
 import pygame
+from util import *
 
 
 class Cell:
@@ -11,12 +12,20 @@ class Cell:
         self.width = 25
         self.height = 25
         self.stroke_width = 0 if filled else 3
+        self.letter = ''
 
     def get_color(self):
         return self.color
 
     def get_rect(self):
-        return pygame.Rect(150 + self.col * 25, 75 + self.row * 25, self.width, self.height)
+        coords = get_coordinates_from_grid(self.row, self.col)
+        return pygame.Rect(coords[0], coords[1], self.width, self.height)
+
+    def get_row(self):
+        return self.row
+
+    def get_col(self):
+        return self.col
 
     def get_stroke_width(self):
         return self.stroke_width
@@ -30,3 +39,9 @@ class Cell:
 
     def _set_color(self):
         self.color = (0, 0, 0) if not self.selected else (92, 184, 92)
+
+    def set_letter(self, letter):
+        self.letter = letter
+
+    def get_letter(self):
+        return self.letter
