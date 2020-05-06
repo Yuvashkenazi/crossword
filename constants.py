@@ -1,5 +1,12 @@
 from enum import Enum
 
+
+class Colors:
+    white = (255, 255, 255)
+    black = (0, 0, 0)
+    green = (92, 184, 92)
+
+
 UP = 273
 DOWN = 274
 RIGHT = 275

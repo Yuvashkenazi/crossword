@@ -1,5 +1,6 @@
 import pygame
 from Classes.Cell import Cell
+from constants import Colors
 from util import *
 
 
@@ -51,17 +52,21 @@ class Crossword:
 
     def draw_graph(self):
         for cell in self.cells:
-            self._draw_cell(cell)
-
+            if cell != self.selected:
+                self._draw_cell(cell)
         # selected cell needs to be drawn last
         self._draw_cell(self.selected)
 
     def _draw_cell(self, cell):
+        if cell.get_letter():
+            self._draw_text(cell.get_letter(), cell.get_row(), cell.get_col())
+
         pygame.draw.rect(self.screen, cell.get_color(),
                          cell.get_rect(), cell.get_stroke_width())
-        self._draw_text(cell.get_letter(), cell.get_row(), cell.get_col())
 
     def _draw_text(self, text, row, col):
+        cell = self.find_cell(row, col)
+        pygame.draw.rect(self.screen, Colors.white, cell.get_rect(), 0)
         coords = get_coordinates_from_grid(row, col)
         surface = pygame.font.SysFont('arial', 25).render(text, True, (100, 0, 200))
         self.screen.blit(surface, (coords[0] + 5, coords[1] - 2))

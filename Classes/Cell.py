@@ -1,4 +1,6 @@
 import pygame
+
+from constants import Colors
 from util import *
 
 
@@ -45,7 +47,7 @@ class Cell:
         self._set_color()
 
     def _set_color(self):
-        self.color = (0, 0, 0) if not self.selected else (92, 184, 92)
+        self.color = Colors.black if not self.selected else Colors.green
 
     def set_letter(self, letter):
         self.letter = letter
