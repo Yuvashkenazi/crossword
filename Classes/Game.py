@@ -14,9 +14,10 @@ class Game:
         self.language = Languages.HE
 
     def start_game(self):
-        self.screen.fill((255, 255, 255))
+        self.screen.fill(Colors.white)
         self.crossword.init_grid()
         self.crossword.add_words()
+        self.crossword.init_selected_cell()
         self.running = True
 
         LETTERS = None
@@ -43,32 +44,33 @@ class Game:
     def move_around(self, event):
         selected = self.crossword.get_selected_cell()
         if event.key == UP:
-            for row in range(selected.row - 1, -1, -1):
-                new_cell = self.crossword.find_cell(max(0, row),
-                                                    selected.col)
-                if not new_cell.get_filled():
-                    self.crossword.set_selected_cell(new_cell)
-                    break
+            # from previous to top
+            possibilities = range(selected.row - 1, -1, -1)
+            direction = 'v'
 
         elif event.key == DOWN:
-            for row in range(selected.row + 1, self.size - 1):
-                new_cell = self.crossword.find_cell(min(self.size - 1, row),
-                                                    selected.col)
-                if not new_cell.get_filled():
-                    self.crossword.set_selected_cell(new_cell)
-                    break
+            # from next to bottom
+            possibilities = range(selected.row + 1, self.size)
+            direction = 'v'
 
         elif event.key == RIGHT:
-            for col in range(selected.col + 1, self.size - 1):
-                new_cell = self.crossword.find_cell(selected.row,
-                                                    min(self.size - 1, col))
-                if not new_cell.get_filled():
-                    self.crossword.set_selected_cell(new_cell)
-                    break
+            # from next to rightmost
+            possibilities = range(selected.col + 1, self.size)
+            direction = 'h'
+
         elif event.key == LEFT:
-            for col in range(selected.col - 1, -1, -1):
-                new_cell = self.crossword.find_cell(selected.row,
-                                                    max(0, col))
-                if not new_cell.get_filled():
-                    self.crossword.set_selected_cell(new_cell)
-                    break
+            # from previous to leftmost
+            possibilities = range(selected.col - 1, -1, -1)
+            direction = 'h'
+        self.move_to_nearest(possibilities, selected.row, selected.col,
+                             direction)
+
+    def move_to_nearest(self, rng, row, col, dir):
+        for x in rng:
+            if dir == 'h':
+                new_cell = self.crossword.find_cell(row, x)
+            elif dir == 'v':
+                new_cell = self.crossword.find_cell(x, col)
+            if not new_cell.get_filled():
+                self.crossword.set_selected_cell(new_cell)
+                break

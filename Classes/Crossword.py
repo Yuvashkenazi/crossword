@@ -14,17 +14,14 @@ class Crossword:
             Word(0, 0, 10, 'h'),
             Word(0, 0, 10, 'v'),
             Word(0, 5, 10, 'v'),
-            Word(5, 5, 5, 'h')
+            Word(5, 5, 5, 'h'),
+            Word(grid_size-8, grid_size-1, 8, 'v')
         ]
 
     def init_grid(self):
         for i in range(self.grid_size):
             for j in range(self.grid_size):
                 cell = Cell(i, j, True)
-
-                if i == 8 and j == 8:
-                    self.set_selected_cell(cell)
-
                 self.cells.append(cell)
 
     def set_selected_cell(self, cell):
@@ -37,6 +34,33 @@ class Crossword:
         # word = start_row, start_col, length, dir
         for word in self.words:
             self._add_word(word)
+
+    def init_selected_cell(self):
+        center_cell = self.find_cell(self.grid_size//2, self.grid_size//2)
+        if not center_cell.get_filled():
+            self.set_selected_cell(center_cell)
+            return True
+        all_unfilled_cells = self.get_all_unfilled_cells()
+        min_dist = 10000
+        selected = None
+        for cell in all_unfilled_cells:
+            dist = cells_distance(cell, center_cell)
+            if dist < min_dist:
+                selected = cell
+                min_dist = dist
+        if not selected:
+            return False
+        self.set_selected_cell(selected)
+        return True
+
+    def get_all_unfilled_cells(self):
+        all_unfilled_cells = []
+        for i in range(self.grid_size):
+            for j in range(self.grid_size):
+                cell = self.find_cell(i, j)
+                if not cell.get_filled():
+                    all_unfilled_cells.append(cell)
+        return all_unfilled_cells
 
     def change_letter(self, letter):
         if not self.selected.get_filled():
