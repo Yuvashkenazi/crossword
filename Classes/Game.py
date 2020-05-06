@@ -43,18 +43,32 @@ class Game:
     def move_around(self, event):
         selected = self.crossword.get_selected_cell()
         if event.key == UP:
-            new_cell = self.crossword.find_cell(max(0, selected.row - 1),
-                                                selected.col)
-            self.crossword.set_selected_cell(new_cell)
+            for row in range(selected.row - 1, -1, -1):
+                new_cell = self.crossword.find_cell(max(0, row),
+                                                    selected.col)
+                if not new_cell.get_filled():
+                    self.crossword.set_selected_cell(new_cell)
+                    break
+
         elif event.key == DOWN:
-            new_cell = self.crossword.find_cell(min(self.size - 1, selected.row + 1),
-                                                selected.col)
-            self.crossword.set_selected_cell(new_cell)
+            for row in range(selected.row + 1, self.size - 1):
+                new_cell = self.crossword.find_cell(min(self.size - 1, row),
+                                                    selected.col)
+                if not new_cell.get_filled():
+                    self.crossword.set_selected_cell(new_cell)
+                    break
+
         elif event.key == RIGHT:
-            new_cell = self.crossword.find_cell(selected.row,
-                                                min(self.size - 1, selected.col + 1))
-            self.crossword.set_selected_cell(new_cell)
+            for col in range(selected.col + 1, self.size - 1):
+                new_cell = self.crossword.find_cell(selected.row,
+                                                    min(self.size - 1, col))
+                if not new_cell.get_filled():
+                    self.crossword.set_selected_cell(new_cell)
+                    break
         elif event.key == LEFT:
-            new_cell = self.crossword.find_cell(selected.row,
-                                                max(0, selected.col - 1))
-            self.crossword.set_selected_cell(new_cell)
+            for col in range(selected.col - 1, -1, -1):
+                new_cell = self.crossword.find_cell(selected.row,
+                                                    max(0, col))
+                if not new_cell.get_filled():
+                    self.crossword.set_selected_cell(new_cell)
+                    break
