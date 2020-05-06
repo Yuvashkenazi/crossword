@@ -38,7 +38,8 @@ class Crossword:
             self._add_word(word)
 
     def change_letter(self, letter):
-        self.selected.set_letter(letter)
+        if not self.selected.get_filled():
+            self.selected.set_letter(letter)
 
     def _add_word(self, word):
         for i in range(word.length):
@@ -46,7 +47,7 @@ class Crossword:
                 cell = self.find_cell(word.row, word.col + i)
             elif word.direction == 'v':
                 cell = self.find_cell(word.row + i, word.col)
-            cell.set_stroke_width(3)
+            cell.set_filled(False)
 
     def draw_graph(self):
         for cell in self.cells:

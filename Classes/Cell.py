@@ -27,6 +27,13 @@ class Cell:
     def get_col(self):
         return self.col
 
+    def set_filled(self, is_filled):
+        self.filled = is_filled
+        self.stroke_width = 0 if is_filled else 3
+
+    def get_filled(self):
+        return self.filled
+
     def get_stroke_width(self):
         return self.stroke_width
 
