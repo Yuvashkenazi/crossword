@@ -3,22 +3,19 @@ from Classes.Cell import Cell
 from constants import Color
 from constants import Direction
 from util import *
+from words import words
 
 
 class Crossword:
-    def __init__(self, screen, grid_size):
+    def __init__(self, screen, grid_size, rtl=True):
         self.screen = screen
         self.grid_size = grid_size
         self.cells = []
         self.selected = None
         self.font = pygame.font.Font(get_font_location(), 1)
-        self.words = [
-            Word(0, 0, 10, Direction.horizontal),
-            Word(0, 0, 10, Direction.vertical),
-            Word(0, 5, 10, Direction.vertical),
-            Word(5, 5, 5, Direction.horizontal),
-            Word(grid_size - 8, grid_size - 1, 8, Direction.vertical)
-        ]
+        self.words = self.load_words(words)
+        # right to left
+        self.rtl = rtl
 
     def init_crossword(self):
         self.init_font()
@@ -48,6 +45,11 @@ class Crossword:
         # word = start_row, start_col, length, dir
         for word in self.words:
             self._add_word(word)
+        self.add_word_numbers()
+
+    def add_word_numbers(self):
+        for cell in self.get_all_unfilled_cells():
+            pass #TODO: CONTINUE THIS
 
     def init_selected_cell(self):
         center_cell = self.find_cell(self.grid_size // 2, self.grid_size // 2)
@@ -84,9 +86,14 @@ class Crossword:
         for i in range(word.length):
             if word.direction == Direction.horizontal:
                 cell = self.find_cell(word.row, word.col + i)
+                if (i == 0 and not self.rtl) or (i == word.length - 1 and self.rtl):
+                    cell.set_first(True)
             elif word.direction == Direction.vertical:
                 cell = self.find_cell(word.row + i, word.col)
+                if i == 0:
+                    cell.set_first(True)
             cell.set_filled(False)
+
 
     def draw_graph(self):
         for cell in self.cells:
@@ -130,11 +137,15 @@ class Crossword:
     def get_selected_cell(self):
         return self.selected
 
+    def load_words(self, words):
+        return [Word(**word) for word in words]
 
 class Word:
-    def __init__(self, start_row, start_col, length, direction, text=None):
+    def __init__(self, q, ans, start_row, start_col, direction):
+        self.q = q
+        self.text = ans
         self.row = start_row
         self.col = start_col
-        self.length = length
         self.direction = direction
-        self.text = text
+        self.length = len(ans)
+        self.number = None

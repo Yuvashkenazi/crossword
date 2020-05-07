@@ -14,6 +14,8 @@ class Cell:
         self.scale = calculate_scale()
         self.stroke_width = 0 if filled else 3
         self.letter = ' '
+        self.belongs_to_words = []
+        self.is_first_letter = False
 
     def get_color(self):
         return self.color
@@ -27,6 +29,12 @@ class Cell:
 
     def get_col(self):
         return self.col
+
+    def set_first(self, is_first):
+        self.is_first_letter = is_first
+
+    def get_first(self):
+        return self.is_first_letter
 
     def set_filled(self, is_filled):
         self.filled = is_filled

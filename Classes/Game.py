@@ -11,8 +11,9 @@ class Game:
         self.screen = pygame.display.set_mode()
         self.crossword_size = CROSSWORD_SIZE
         pygame.display.set_caption('Mazal Tov!')
-        self.crossword = Crossword(self.screen, self.crossword_size)
         self.language = Language.HE
+        self.crossword = Crossword(self.screen, self.crossword_size,
+                                   True if self.language == Language.HE else False)
 
     def start_game(self):
         self.screen.fill(Color.white)
