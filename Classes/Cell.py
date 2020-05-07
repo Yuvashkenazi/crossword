@@ -13,7 +13,7 @@ class Cell:
         self._set_color()
         self.scale = calculate_scale()
         self.stroke_width = 0 if filled else 3
-        self.letter = ''
+        self.letter = ' '
 
     def get_color(self):
         return self.color

@@ -1,6 +1,6 @@
 import pygame
 
-CROSSWORD_SIZE = 16
+from constants import CROSSWORD_SIZE
 
 
 def get_offset():

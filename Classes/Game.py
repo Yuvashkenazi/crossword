@@ -8,7 +8,7 @@ class Game:
     def __init__(self):
         pygame.init()
         self.running = False
-        self.screen = pygame.display.set_mode(flags=pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode()
         self.crossword_size = CROSSWORD_SIZE
         pygame.display.set_caption('Mazal Tov!')
         self.crossword = Crossword(self.screen, self.crossword_size)
@@ -28,12 +28,15 @@ class Game:
 
         while self.running:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == ESCAPE:
                     self.running = False
                 if event.type == pygame.KEYDOWN and event.key in ARROWS:
                     self.move_around(event)
                 if event.type == pygame.KEYDOWN and event.key in LETTERS:
                     self.crossword.change_letter(LETTERS[event.key])
+                if event.type == pygame.KEYDOWN and event.key in [DEL,
+                                                                  BACKSPACE]:
+                    self.crossword.change_letter(' ')
 
             self.crossword.draw_graph()
 

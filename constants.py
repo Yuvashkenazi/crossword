@@ -1,8 +1,9 @@
-from enum import Enum
 import pygame
 
+CROSSWORD_SIZE = 16
 
-class Language(Enum):
+
+class Language:
     EN = 1
     HE = 2
 
@@ -25,11 +26,12 @@ RIGHT = pygame.K_RIGHT
 LEFT = pygame.K_LEFT
 ARROWS = [UP, DOWN, RIGHT, LEFT]
 
-SPACE = 32
-ENTER = 13
-ESC = 27
-DEL = 127
-BK_SPACE = 8
+SPACE = pygame.K_SPACE
+ENTER = pygame.K_RETURN
+ESC = pygame.K_ESCAPE
+DEL = pygame.K_DELETE
+BACKSPACE = pygame.K_BACKSPACE
+ESCAPE= pygame.K_ESCAPE
 
 LETTERS_EN = {
     pygame.K_q: 'Q',
@@ -60,34 +62,6 @@ LETTERS_EN = {
     pygame.K_m: 'M',
 }
 
-LETTERS_EN2 = {
-    47: 'Q',
-    39: 'W',
-    247: 'E',
-    248: 'R',
-    224: 'T',
-    232: 'Y',
-    229: 'U',
-    239: 'I',
-    237: 'O',
-    244: 'P',
-    249: 'A',
-    227: 'S',
-    226: 'D',
-    235: 'F',
-    242: 'G',
-    233: 'H',
-    231: 'J',
-    236: 'K',
-    234: 'L',
-    230: 'Z',
-    241: 'X',
-    225: 'C',
-    228: 'V',
-    240: 'B',
-    238: 'N',
-    246: 'M',
-}
 
 LETTERS_HE = {
     pygame.K_e: 'ק',
@@ -117,34 +91,4 @@ LETTERS_HE = {
     pygame.K_m: 'צ',
     pygame.K_COMMA: 'ת',
     pygame.K_PERIOD: 'צ'
-}
-
-LETTERS_HE2 = {
-    247: 'ק',
-    248: 'ר',
-    224: 'א',
-    232: 'ט',
-    229: 'ו',
-    # 239: 'ן',
-    # 237: 'ם',
-    244: 'פ',
-    249: 'ש',
-    227: 'ד',
-    226: 'ג',
-    235: 'כ',
-    242: 'ע',
-    233: 'י',
-    231: 'ח',
-    236: 'ל',
-    # 234: 'ך',
-    # 243: 'ף',
-    230: 'ז',
-    241: 'ס',
-    225: 'ב',
-    228: 'ה',
-    240: 'נ',
-    238: 'מ',
-    246: 'צ',
-    250: 'ת',
-    # 245: 'ץ',
 }
