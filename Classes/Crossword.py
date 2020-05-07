@@ -1,6 +1,7 @@
 import pygame
 from Classes.Cell import Cell
-from constants import Colors
+from constants import Color
+from constants import Direction
 from util import *
 
 
@@ -10,13 +11,26 @@ class Crossword:
         self.grid_size = grid_size
         self.cells = []
         self.selected = None
+        self.font = pygame.font.Font(get_font_location(), 1)
         self.words = [
-            Word(0, 0, 10, 'h'),
-            Word(0, 0, 10, 'v'),
-            Word(0, 5, 10, 'v'),
-            Word(5, 5, 5, 'h'),
-            Word(grid_size - 8, grid_size - 1, 8, 'v')
+            Word(0, 0, 10, Direction.horizontal),
+            Word(0, 0, 10, Direction.vertical),
+            Word(0, 5, 10, Direction.vertical),
+            Word(5, 5, 5, Direction.horizontal),
+            Word(grid_size - 8, grid_size - 1, 8, Direction.vertical)
         ]
+
+    def init_crossword(self):
+        self.init_font()
+        self.init_grid()
+        self.add_words()
+        self.init_selected_cell()
+
+    def init_font(self):
+        font_location = get_font_location()
+        while self.font.get_height() < calculate_scale():
+            bigger_font = pygame.font.Font(font_location, self.font.get_height())
+            self.font = bigger_font
 
     def init_grid(self):
         for i in range(self.grid_size):
@@ -68,9 +82,9 @@ class Crossword:
 
     def _add_word(self, word):
         for i in range(word.length):
-            if word.direction == 'h':
+            if word.direction == Direction.horizontal:
                 cell = self.find_cell(word.row, word.col + i)
-            elif word.direction == 'v':
+            elif word.direction == Direction.vertical:
                 cell = self.find_cell(word.row + i, word.col)
             cell.set_filled(False)
 
@@ -90,10 +104,22 @@ class Crossword:
 
     def _draw_text(self, text, row, col):
         cell = self.find_cell(row, col)
-        pygame.draw.rect(self.screen, Colors.white, cell.get_rect(), 0)
+        pygame.draw.rect(self.screen, Color.white, cell.get_rect(), 0)
         coords = get_coordinates_from_grid(row, col)
-        surface = pygame.font.Font('fonts/Arimo/Arimo-Regular.ttf', 22).render(text, True, Colors.purple)
-        self.screen.blit(surface, (coords[0] + 2, coords[1]))
+        offset = self._get_cell_center_offset(text)
+
+        dest = (coords[0] + offset[0], coords[1] + offset[1])
+        surface = self.font.render(text, True, Color.purple)
+        self.screen.blit(surface, dest)
+
+    def _get_cell_center_offset(self, letter):
+        scale = calculate_scale()
+        letter_size = self.font.size(letter)
+        letter_width = letter_size[0]
+        letter_height = letter_size[1]
+        left_offset = (scale - letter_width) // 2
+        top_offset = (scale - letter_height) // 2
+        return left_offset, top_offset
 
     def find_cell(self, row, col):
         for cell in self.cells:

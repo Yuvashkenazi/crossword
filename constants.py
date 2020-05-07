@@ -2,22 +2,27 @@ from enum import Enum
 import pygame
 
 
-class Languages(Enum):
+class Language(Enum):
     EN = 1
     HE = 2
 
 
-class Colors:
+class Color:
     white = (255, 255, 255)
     black = (0, 0, 0)
     green = (92, 184, 92)
     purple = (89, 0, 178)
 
 
-UP = 273
-DOWN = 274
-RIGHT = 275
-LEFT = 276
+class Direction:
+    vertical = 'v'
+    horizontal = 'h'
+
+
+UP = pygame.K_UP
+DOWN = pygame.K_DOWN
+RIGHT = pygame.K_RIGHT
+LEFT = pygame.K_LEFT
 ARROWS = [UP, DOWN, RIGHT, LEFT]
 
 SPACE = 32
@@ -25,11 +30,6 @@ ENTER = 13
 ESC = 27
 DEL = 127
 BK_SPACE = 8
-
-LANGUAGES = {
-    'EN': 0,
-    'HE': 1
-}
 
 LETTERS_EN = {
     pygame.K_q: 'Q',
