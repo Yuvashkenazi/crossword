@@ -1,6 +1,6 @@
 import pygame
 
-from constants import Color
+from constants import Color, Direction
 from util import *
 
 
@@ -14,8 +14,11 @@ class Cell:
         self.scale = calculate_scale()
         self.stroke_width = 0 if filled else 3
         self.letter = ' '
-        self.belongs_to_words = []
-        self.is_first_letter = False
+        self.belongs_to_words = [0, 0]  # [horizontal, vertical]
+        self.is_first_letter = ''  # '', h, v, hv
+
+    def __repr__(self):
+        return f"<{self.row}, {self.col}> color: {'black' if self.filled else 'white'}"
 
     def get_color(self):
         return self.color
@@ -30,8 +33,20 @@ class Cell:
     def get_col(self):
         return self.col
 
+    def set_belongs_to(self, direction, number):
+        if direction == Direction.horizontal:
+            self.belongs_to_words[0] = number
+        elif direction == Direction.vertical:
+            self.belongs_to_words[1] = number
+
+    def get_belongs_to(self):
+        return self.belongs_to_words
+
     def set_first(self, is_first):
-        self.is_first_letter = is_first
+        if is_first == Direction.horizontal:
+            self.is_first_letter = is_first + self.is_first_letter
+        elif is_first == Direction.vertical:
+            self.is_first_letter = self.is_first_letter + is_first
 
     def get_first(self):
         return self.is_first_letter

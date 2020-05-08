@@ -18,7 +18,6 @@ class Game:
     def start_game(self):
         self.screen.fill(Color.white)
         self.crossword.init_crossword()
-
         self.running = True
 
         LETTERS = None
