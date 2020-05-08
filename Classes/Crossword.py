@@ -94,13 +94,59 @@ class Crossword:
                     cell.set_first(True)
             cell.set_filled(False)
 
-
     def draw_graph(self):
         for cell in self.cells:
             if cell != self.selected:
                 self._draw_cell(cell)
         # selected cell needs to be drawn last
         self._draw_cell(self.selected)
+
+    def draw_clues(self):
+        hz_words = self._get_horizontal_words()
+        v_words = self._get_vertical_words()
+
+        hz_title = reverse_word('מאוזן:') if self.rtl else 'Horizontal'
+        v_title = reverse_word('מאונך:') if self.rtl else 'Vertical'
+
+        offset = get_clues_offset()
+        row_left_offset = offset[0]
+        row_top_offset = offset[1]
+
+        dest = (row_left_offset, row_top_offset)
+        surface = self.font.render(hz_title, True, Color.black)
+        self.screen.blit(surface, dest)
+
+        for word in hz_words:
+            row_top_offset += 60
+            dest = (row_left_offset, row_top_offset)
+            surface = self.font.render(reverse_word(word.q), True, Color.black)
+            self.screen.blit(surface, dest)
+
+        row_top_offset += 100
+
+        dest = (row_left_offset, row_top_offset)
+        surface = self.font.render(v_title, True, Color.black)
+        self.screen.blit(surface, dest)
+
+        for word in v_words:
+            row_top_offset += 60
+            dest = (row_left_offset, row_top_offset)
+            surface = self.font.render(reverse_word(word.q), True, Color.black)
+            self.screen.blit(surface, dest)
+
+    def _get_horizontal_words(self):
+        hz_words = []
+        for word in self.words:
+            if word.direction == Direction.horizontal:
+                hz_words.append(word)
+        return hz_words
+
+    def _get_vertical_words(self):
+        v_words = []
+        for word in self.words:
+            if word.direction == Direction.vertical:
+                v_words.append(word)
+        return v_words
 
     def _draw_cell(self, cell):
         if cell.get_letter():
@@ -139,6 +185,7 @@ class Crossword:
 
     def load_words(self, words):
         return [Word(**word) for word in words]
+
 
 class Word:
     def __init__(self, q, ans, start_row, start_col, direction):

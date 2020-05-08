@@ -40,6 +40,7 @@ class Game:
                     self.crossword.change_letter(' ')
 
             self.crossword.draw_graph()
+            self.crossword.draw_clues()
 
             pygame.display.flip()
 

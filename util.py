@@ -11,6 +11,14 @@ def get_offset():
     return left_offset, top_offset
 
 
+def get_clues_offset():
+    cw_dim = calculate_scale() * CROSSWORD_SIZE
+    win_dim = get_window_size()
+    left_offset = (win_dim[0] - cw_dim) // 8
+    top_offset = (win_dim[1] - cw_dim) // 2
+    return left_offset, top_offset
+
+
 def get_window_size():
     return pygame.display.get_window_size()
 
@@ -33,6 +41,10 @@ def cells_distance(cell1, cell2):
     y = cell1.row - cell2.row
     distance = (x ** 2 + y ** 2) ** 0.5
     return distance
+
+
+def reverse_word(word):
+    return word[::-1]
 
 
 def get_font_location():
