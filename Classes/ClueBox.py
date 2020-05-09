@@ -2,8 +2,8 @@ from util import *
 from constants import *
 from gameOptions import *
 
-LINE_SPACING = 25
-FONT_SIZE = 22
+LINE_SPACING = 20
+FONT_SIZE = 16
 
 
 class ClueBox:
