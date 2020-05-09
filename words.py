@@ -253,12 +253,22 @@ unused_words = [
   # },
 
 def process(text):
-  changes = {" ": "", "ם": "מ", "ך": "כ", "ף": "פ", "ץ": "צ", "ן": "נ"}
+  changes = {" ": "", "ם": "מ", "ך": "כ", "ף": "פ", "ץ": "צ", "ן": "נ",
+             "(": ")", ")":"("}
   for old, new in changes.items():
     text = text.replace(old, new)
   return text
 
+def add_word_lengths(q, ans):
+  lengths = tuple([len(w) for w in ans.split()])
+  if len(lengths) == 1:
+    lengths = ''
+  else:
+    lengths = ' ' + str(lengths)
+  return q + lengths
+
 words = []
 for word in raw_words:
+  word['q'] = add_word_lengths(word['q'], word['ans'])
   word['ans'] = process(word['ans'])
   words.append(word)
