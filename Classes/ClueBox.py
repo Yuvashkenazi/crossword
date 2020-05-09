@@ -2,13 +2,16 @@ from util import *
 from constants import *
 from gameOptions import *
 
+LINE_SPACING = 25
+FONT_SIZE = 22
+
 
 class ClueBox:
     def __init__(self, screen):
         self.screen = screen
         self.offset = get_clues_offset()
         self.words = []
-        self.font = pygame.font.Font(get_font_location(), 22)
+        self.font = pygame.font.Font(get_font_location(), FONT_SIZE)
         self.selected_numbers = [0, 0]
 
     def set_words(self, words):
@@ -37,8 +40,8 @@ class ClueBox:
         self.font.set_bold(False)
         self.font.set_underline(False)
 
-        for word in hz_words:
-            row_top_offset += 60
+        for word in sorted(hz_words, key=lambda w: w.number):
+            row_top_offset += LINE_SPACING
             dest = (row_left_offset, row_top_offset)
             text = reverse_word(reverse_word(str(word.number)) + '. ' + word.q)
             color = Color.green if self.selected_numbers[0] == word.number else Color.black
@@ -46,7 +49,7 @@ class ClueBox:
             pygame.draw.rect(self.screen, Color.white, pygame.Rect(dest[0], dest[1], size[0], size[1]), 0)
             draw_text(self.screen, self.font, dest[0], dest[1], text, color)
 
-        row_top_offset += 100
+        row_top_offset += LINE_SPACING * 2
 
         dest = (row_left_offset, row_top_offset)
         size = self.font.size(v_title)
@@ -57,10 +60,10 @@ class ClueBox:
         self.font.set_bold(False)
         self.font.set_underline(False)
 
-        for word in v_words:
-            row_top_offset += 60
+        for word in sorted(v_words, key=lambda w: w.number):
+            row_top_offset += LINE_SPACING
             dest = (row_left_offset, row_top_offset)
-            text = reverse_word(str(word.number) + '. ' + word.q)
+            text = reverse_word(reverse_word(str(word.number)) + '. ' + word.q)
             color = Color.green if self.selected_numbers[1] == word.number else Color.black
             size = self.font.size(text)
             pygame.draw.rect(self.screen, Color.white, pygame.Rect(dest[0], dest[1], size[0], size[1]), 0)
