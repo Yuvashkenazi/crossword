@@ -1,6 +1,6 @@
 import pygame
 from Classes.Crossword import Crossword
-from constants import *
+from gameOptions import *
 from util import *
 
 
@@ -11,7 +11,7 @@ class Game:
         self.screen = pygame.display.set_mode()
         self.crossword_size = CROSSWORD_SIZE
         pygame.display.set_caption('Mazal Tov!')
-        self.language = Language.HE
+        self.language = LANGUAGE
         self.crossword = Crossword(self.screen, self.crossword_size,
                                    True if self.language == Language.HE else False)
 
@@ -39,7 +39,6 @@ class Game:
                     self.crossword.change_letter(' ')
 
             self.crossword.draw_graph()
-            self.crossword.draw_clues()
 
             pygame.display.flip()
 

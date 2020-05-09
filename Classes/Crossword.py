@@ -1,5 +1,6 @@
 import pygame
 from Classes.Cell import Cell
+from Classes.ClueBox import ClueBox
 from constants import Color
 from constants import Direction
 from util import *
@@ -15,6 +16,7 @@ class Crossword:
         self.font = pygame.font.Font(get_font_location(), 1)
         self.small_font = pygame.font.Font(get_font_location(), 1)
         self.words = self.load_words(words)
+        self.clue_box = ClueBox(self.screen)
         # right to left
         self.rtl = rtl
 
@@ -23,6 +25,7 @@ class Crossword:
         self.init_grid()
         self.add_words()
         self.init_selected_cell()
+        self.clue_box.display_clues()
 
     def init_font(self):
         font_location = get_font_location()
@@ -42,12 +45,15 @@ class Crossword:
             other_cell.set_selected(False)
         cell.set_selected(True)
         self.selected = cell
+        self.clue_box.set_selected_numbers(cell.get_belongs_to())
+        self.clue_box.display_clues()
 
     def add_words(self):
         # word = start_row, start_col, length, dir
         for word in self.words:
             self._add_word(word)
         self.add_word_numbers()
+        self.clue_box.set_words(self.words)
 
     def add_word_numbers(self):
         # update Cells
@@ -156,49 +162,9 @@ class Crossword:
         # selected cell needs to be drawn last
         self._draw_cell(self.selected)
 
-    def draw_clues(self):
-        hz_words = self._get_words_by_direction(Direction.horizontal)
-        v_words = self._get_words_by_direction(Direction.vertical)
-
-        hz_title = reverse_word('מאוזן:') if self.rtl else 'Horizontal'
-        v_title = reverse_word('מאונך:') if self.rtl else 'Vertical'
-
-        offset = get_clues_offset()
-        row_left_offset = offset[0]
-        row_top_offset = offset[1]
-
-        dest = (row_left_offset, row_top_offset)
-        surface = self.font.render(hz_title, True, Color.black)
-        self.screen.blit(surface, dest)
-
-        for word in hz_words:
-            row_top_offset += 60
-            dest = (row_left_offset, row_top_offset)
-            surface = self.font.render(reverse_word(word.q), True, Color.black)
-            self.screen.blit(surface, dest)
-
-        row_top_offset += 100
-
-        dest = (row_left_offset, row_top_offset)
-        surface = self.font.render(v_title, True, Color.black)
-        self.screen.blit(surface, dest)
-
-        for word in v_words:
-            row_top_offset += 60
-            dest = (row_left_offset, row_top_offset)
-            surface = self.font.render(reverse_word(word.q), True, Color.black)
-            self.screen.blit(surface, dest)
-
-    def _get_words_by_direction(self, direction):
-        dir_words = []
-        for word in self.words:
-            if word.direction == direction:
-                dir_words.append(word)
-        return dir_words
-
     def _draw_cell(self, cell):
         if cell.get_letter():
-            self._draw_text(cell)
+            self._draw_letter(cell)
         if cell.get_first():
             self._draw_clue_number(cell)
         # self._draw_clue_number(cell)
@@ -232,16 +198,14 @@ class Crossword:
         # surface = self.small_font.render(text, True, Color.black)
         # self.screen.blit(surface, dest)
 
-
-    def _draw_text(self, cell):
+    def _draw_letter(self, cell):
         pygame.draw.rect(self.screen, Color.white, cell.get_rect(), 0)
         coords = get_coordinates_from_grid(cell.get_row(), cell.get_col())
         text = cell.get_letter()
         offset = self._get_cell_center_offset(text)
 
         dest = (coords[0] + offset[0], coords[1] + offset[1])
-        surface = self.font.render(text, True, Color.purple)
-        self.screen.blit(surface, dest)
+        draw_text(self.screen, self.font, dest[0], dest[1], text, Color.purple)
 
     def _get_cell_center_offset(self, letter):
         scale = calculate_scale()

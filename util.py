@@ -1,6 +1,11 @@
 import pygame
 
-from constants import CROSSWORD_SIZE
+from gameOptions import CROSSWORD_SIZE
+
+
+def draw_text(screen, font, x, y, text, color):
+    surface = font.render(text, True, color)
+    screen.blit(surface, (x, y))
 
 
 def get_offset():

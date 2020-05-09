@@ -18,7 +18,7 @@ class Cell:
         self.is_first_letter = ''  # '', h, v, hv
 
     def __repr__(self):
-        return f"<{self.row}, {self.col}> color: {'black' if self.filled else 'white'}"
+        return f"<{self.row}, {self.col}> color: {'black' if self.filled else 'white'} belongs to: {self.belongs_to_words}"
 
     def get_color(self):
         return self.color

@@ -1,7 +1,5 @@
 import pygame
 
-CROSSWORD_SIZE = 16
-
 
 class Language:
     EN = 1
@@ -28,10 +26,9 @@ ARROWS = [UP, DOWN, RIGHT, LEFT]
 
 SPACE = pygame.K_SPACE
 ENTER = pygame.K_RETURN
-ESC = pygame.K_ESCAPE
 DEL = pygame.K_DELETE
 BACKSPACE = pygame.K_BACKSPACE
-ESCAPE= pygame.K_ESCAPE
+ESCAPE = pygame.K_ESCAPE
 
 LETTERS_EN = {
     pygame.K_q: 'Q',
@@ -61,7 +58,6 @@ LETTERS_EN = {
     pygame.K_n: 'N',
     pygame.K_m: 'M',
 }
-
 
 LETTERS_HE = {
     pygame.K_e: 'ק',
