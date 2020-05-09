@@ -243,3 +243,4 @@ class Word:
         end_row = self.row if self.direction == Direction.horizontal else self.col + self.length
         end_col = self.col if self.direction == Direction.vertical else self.row + self.length
         return f"#{self.number}{self.direction}, text: {self.text}, <{self.row}, {self.col}> to <{end_row}, {end_col}>"
+

@@ -40,7 +40,7 @@ class ClueBox:
         for word in hz_words:
             row_top_offset += 60
             dest = (row_left_offset, row_top_offset)
-            text = reverse_word(str(word.number) + '. ' + word.q)
+            text = reverse_word(reverse_word(str(word.number)) + '. ' + word.q)
             color = Color.green if self.selected_numbers[0] == word.number else Color.black
             size = self.font.size(text)
             pygame.draw.rect(self.screen, Color.white, pygame.Rect(dest[0], dest[1], size[0], size[1]), 0)
