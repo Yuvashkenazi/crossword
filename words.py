@@ -94,6 +94,13 @@ raw_words = [
     "direction": Direction.horizontal
   },
   {
+    "q": "שם חיבה קצר לאבא",
+    "ans": "שיוש",
+    "start_row": 0,
+    "start_col": 15,
+    "direction": Direction.vertical
+  },
+  {
     "q": "משתמש באובניים",
     "ans": "קדר",
     "start_row": 3,
@@ -213,7 +220,7 @@ raw_words = [
     "direction": Direction.horizontal
   },
   {
-    "q": "איכותו של אדון צרפתי",
+    "q": "איכותו של אדון פריזאי",
     "ans": "טיבו",
     "start_row": 12,
     "start_col": 10,
