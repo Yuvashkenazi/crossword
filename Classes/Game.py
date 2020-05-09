@@ -1,6 +1,7 @@
 import pygame
 from Classes.Crossword import Crossword
 from gameOptions import *
+from constants import *
 from util import *
 
 
