@@ -1,4 +1,6 @@
 from constants import Direction
+from util import reverse_word
+
 raw_words = [
   {
     "q": "שם חיבה ליובל",
@@ -190,7 +192,7 @@ raw_words = [
     "direction": Direction.vertical
   },
   {
-    "q": 'יוצרי התשבץ בפעולה חשבונית (ר"ת)',
+    "q": 'יוצרי התשבץ בפעולה חשבונית )ר"ת(',
     "ans": "יפע",
     "start_row": 10,
     "start_col": 9,
@@ -253,18 +255,17 @@ unused_words = [
   # },
 
 def process(text):
-  changes = {" ": "", "ם": "מ", "ך": "כ", "ף": "פ", "ץ": "צ", "ן": "נ",
-             "(": ")", ")":"("}
+  changes = {" ": "", "ם": "מ", "ך": "כ", "ף": "פ", "ץ": "צ", "ן": "נ"}
   for old, new in changes.items():
     text = text.replace(old, new)
   return text
 
 def add_word_lengths(q, ans):
-  lengths = tuple([len(w) for w in ans.split()])
+  lengths = tuple(reversed([len(w) for w in ans.split()]))
   if len(lengths) == 1:
     lengths = ''
   else:
-    lengths = ' ' + str(lengths)
+    lengths = ' ' + reverse_word(str(lengths))
   return q + lengths
 
 words = []
