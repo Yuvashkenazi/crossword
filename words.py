@@ -18,15 +18,8 @@ words = [
   {
     "q": "שם חיבה נוסף ליובל",
     "ans": "יוש",
-    "start_row": 8,
-    "start_col": 9,
-    "direction": Direction.horizontal
-  },
-  {
-    "q": "שם השכונה של יובל",
-    "ans": "פיצוחים",
-    "start_row": 7,
-    "start_col": 11,
+    "start_row": 6,
+    "start_col": 12,
     "direction": Direction.vertical
   },
   {
@@ -48,6 +41,51 @@ words = [
     "ans": "הכי טעים בעולם",
     "start_row": 0,
     "start_col": 15,
+    "direction": Direction.vertical
+  },
+  {
+    "q": "לילה טוב",
+    "ans": "נימבוס אלפיים",
+    "start_row": 0,
+    "start_col": 0,
+    "direction": Direction.vertical
+  }
+]
+
+unused_words = [
+  {
+    "q": "שם השכונה של יובל",
+    "ans": "פיצוחים",
+    "start_row": 7,
+    "start_col": 11,
+    "direction": Direction.vertical
+  },
+  {
+    "q": "מי שמשועמם",
+    "ans": "מטומטם",
+    "start_row": 0,
+    "start_col": 0,
+    "direction": Direction.vertical
+  },
+  {
+    "q": "תחום במתמטיקה",
+    "ans": "אקטואריה",
+    "start_row": 0,
+    "start_col": 0,
+    "direction": Direction.vertical
+  },
+  {
+    "q": "זמר דומה לבעלך",
+    "ans": "מתי כספי",
+    "start_row": 0,
+    "start_col": 0,
+    "direction": Direction.vertical
+  },
+  {
+    "q": "יוצרת שקשוקה מפורסמת",
+    "ans": "רינה",
+    "start_row": 0,
+    "start_col": 0,
     "direction": Direction.vertical
   }
 ]
